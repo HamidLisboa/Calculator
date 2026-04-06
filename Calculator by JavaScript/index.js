@@ -2,8 +2,19 @@ const PrincipalDisplay = document.getElementById("principalDisplay");
 const SecondaryDisplay = document.getElementById("secondaryDisplay");
 let lastResult = false;
 const operators = new Set(["+", "-", "*", "/"]);
+let digitCount = 0;
 
 function appendToDisplay(input) {
+  if (!operators.has(input) && input !== "." && digitCount <= 15) {
+    digitCount++;
+  } else if (operators.has(input) || input === ".") {
+    digitCount = 0;
+  }
+  if (digitCount > 15) {
+    window.alert("Maximum digit limit reached.");
+    return;
+  }
+
   if (lastResult) {
     if (!operators.has(input)) {
       PrincipalDisplay.value = "";
@@ -26,7 +37,15 @@ function appendToDisplay(input) {
   }
   try {
     const expression = PrincipalDisplay.value;
-    if (expression && !operators.has(expression.slice(-1))) {
+    const hasOperator = Array.from(expression).some((char) =>
+      operators.has(char),
+    );
+    if (
+      expression &&
+      !operators.has(expression.slice(-1)) &&
+      !expression.endsWith(".") &&
+      hasOperator
+    ) {
       SecondaryDisplay.value = eval(expression);
     } else {
       SecondaryDisplay.value = "";
@@ -35,7 +54,15 @@ function appendToDisplay(input) {
     SecondaryDisplay.value = "";
   }
 }
-
+function resizeFont() {
+  if (PrincipalDisplay.value.length > 30) {
+    PrincipalDisplay.style.fontSize = "60%";
+  } else if (PrincipalDisplay.value.length > 20) {
+    PrincipalDisplay.style.fontSize = "80%";
+  } else {
+    PrincipalDisplay.style.fontSize = "100%";
+  }
+}
 function clearDisplay() {
   PrincipalDisplay.value = "0";
   SecondaryDisplay.value = "";

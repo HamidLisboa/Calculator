@@ -1,77 +1,105 @@
 body {
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
+  display: flex;
   justify-content: center;
   align-items: center;
-}
-#display {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-#principalDisplay {
-  width: 350px;
-  height: 100px;
-  background-color: #f3c292;
-  color: rgb(5, 5, 5);
-  font-size: 5rem;
-  display: flex;
-  text-align: left;
-  justify-content: flex-end;
-  padding: 20px;
-  border: none;
-}
-#secondaryDisplay {
-  width: 100px;
-  height: 100px;
-  background-color: #f3c292;
-  color: rgb(5, 5, 5);
-  font-size: 20px;
-  justify-content: flex-end;
-  padding: 20px;
-  border: none;
-  position: relative;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: min(5em, 5%);
 }
 
 #calculator {
-  max-width: 500px;
-  margin: 50px auto;
+  width: min(500px, 100%);
+  margin: 0 auto;
   background-color: #212121;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
+  padding: clamp(1rem, 3vw, 2rem);
 }
+
+#display {
+  width: 100%;
+  display: grid;
+  grid-row: repeat(2, 1fr);
+  margin-bottom: 1rem;
+  margin-right: 10px;
+}
+#principalDisplay {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+#principalDisplay,
+#secondaryDisplay {
+  min-height: 4rem;
+  background-color: #f3c292;
+  color: #050505;
+  text-align: right;
+  padding: 1rem;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#secondaryDisplay {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  min-height: 3rem;
+}
+
 #keys {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 25px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0;
 }
+
 button {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 50px;
   border: none;
   background-color: gray;
   color: white;
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   font-weight: bold;
   cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
 }
+
 button:hover {
   background-color: #555;
 }
+
 button:active {
+  transform: scale(0.98);
   background-color: #333;
 }
+
 .operator-btn {
   background-color: #ff5722;
 }
+
 .operator-btn:hover {
   background-color: #e64a19;
 }
+
 .operator-btn:active {
   background-color: #d84315;
+}
+
+@media (max-width: 440px) {
+  #display {
+    grid-template-columns: 1fr;
+  }
+
+  #principalDisplay,
+  #secondaryDisplay {
+    min-height: 3.5rem;
+  }
+
+  button {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+  }
 }
